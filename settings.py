@@ -10,16 +10,17 @@ STATIC_PATH = os.path.join(FRONTEND_PATH, 'static')
 UPLOAD_FOLDER = os.path.join(STATIC_PATH, 'img')
 
 
-SERVICES_URI = {service: 'http://localhost:{}/api/{}'.format(port, service) for service, port in [
-    ('sessions', 5001),
-    ('profiles', 5002),
-    ('tasks', 5003),
-    ('lessons', 5003),
-]}
-#SERVICES_URI = {service: 'http://{}.herokuapp.com/api/{}'.format(domen, service) for domen, service in [
-#    ('rsoicourse-sessions', 'sessions'),
-#    ('rsoicourse-profiles', 'profiles'),
-#    ('rsoicourse-tasks', 'tasks'),
-#    ('rsoicourse-tasks', 'lessons'),
+#SERVICES_URI = {service: 'http://localhost:{}/api/{}'.format(port, service) for service, port in [
+#    ('sessions', 5001),
+#    ('profiles', 5002),
+#    ('tasks', 5003),
+#    ('lessons', 5003),
 #]}
+
+SERVICES_URI = {service: 'https://{}.herokuapp.com/api/{}'.format(domen, service) for domen, service in [
+    ('rsoicourse-sessions', 'sessions'),
+    ('rsoicourse-profiles', 'profiles'),
+    ('rsoicourse-tasks', 'tasks'),
+    ('rsoicourse-tasks', 'lessons'),
+]}
 
