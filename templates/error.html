@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Ошибка{% endblock %}
+
+{% block body %}
+    <div class="general-container">
+        <div class="container top-container">
+            <div class="row text-center">
+                <h1 class="title">Возникла ошибка</h1>
+            </div>
+            <div class="row text-center">
+                <h3>{{ reason }}</h3>
+            </div>
+            <div>
+                <img src="../static/img/error.png" class="img-responsive center-block">
+            </div>
+        </div>
+    </div>
+{% endblock  %}

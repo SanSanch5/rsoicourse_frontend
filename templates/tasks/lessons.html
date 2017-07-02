@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Уроки{% endblock %}
+
+{% block body %}
+    <div class="container general-container">
+        <div class="row text-center">
+            <h2 class="title">Список уроков</h2>
+        </div>
+        <div class="col-sm-6">
+            <div class="row text-center">
+                <h3 class="title">Все уроки</h3>
+            </div>
+            <div class="list-group">
+                {% for lesson in lessons %}
+                    <a href="/lessons/{{ lesson['number'] }}" class="list-group-item">Урок №{{ lesson['number'] }}</a>
+                {% endfor %}
+            </div>
+
+            {% if user_role == 'tutor' %}
+                <form method="post" role="form" class="form-horizontal">
+                    <div class="row text-center">
+                        <label for="new_lesson" class="col-sm-4 text-right control-label">Новый урок №</label>
+                        <div class="col-sm-2">
+                            <input name="new_lesson" id="new_lesson" required="true" class="form-control">
+                        </div>
+                        <div class="col-sm-3 text-left">
+                            <button type="submit" class="btn btn-primary btn-orange">Создать</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+
+        <div class="col-sm-6">
+            <div class="row text-center">
+                {% if user_role == 'tutor' %}
+                    <h3 class="title">Уроки с непроверенными ответами</h3>
+                {% else %}
+                    <h3 class="title">Уроки с невыполненным заданием</h3>
+                {% endif %}
+                <div class="list-group">
+                    {% for lesson in selected_lessons %}
+                        <a href="/lessons/{{ lesson['number'] }}" class="list-group-item">Урок №{{ lesson['number'] }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

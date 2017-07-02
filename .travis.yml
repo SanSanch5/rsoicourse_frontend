@@ -1,0 +1,9 @@
+language: python
+python:
+  - '3.5'
+
+sudo: enabled
+install: true # skip installation step forawhile
+
+script:	echo "skipping..."
+

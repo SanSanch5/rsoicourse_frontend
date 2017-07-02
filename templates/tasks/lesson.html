@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Урок {% if lesson is not none %}№{{ lesson['number'] }}{% else %}не найден{% endif %}{% endblock %}
+
+{% block body %}
+    <div class="container general-container">
+        {% if lesson is not none %}
+            <div class="row text-center">
+                <h2 class="title">Урок №{{ lesson['number'] }}</h2>
+            </div>
+            <div class="col-sm-6">
+                <div class="row text-center">
+                    <h3 class="title">Задание</h3>
+                </div>
+
+                {% if user_role == 'tutor' %}
+                    <form method="post" role="form" class="form-horizontal">
+                        <input name="lesson_id" value="{{ lesson['id'] }}" class="hidden">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="10" name="task">{% if task is not none %}{{ task['task'] }}{% endif %}</textarea>
+                        </div>
+                        <div class="form-group text-right">
+                            {% if task is not none %}
+                                <input name="task_id" value="{{ task['id'] }}" class="hidden">
+                                <button name="update_task" type="submit" class="btn btn-primary btn-orange">Обновить</button>
+                            {% else %}
+                                <button name="create_task" type="submit" class="btn btn-primary btn-orange">Сохранить</button>
+                            {% endif %}
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="task">
+                        <p>{% if task is not none %}{{ task['task'] }}{% endif %}</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if user_role == 'tutor' %}
+                <div class="col-sm-6">
+                    <div class="row text-center">
+                        <h3 class="title">Ответы студентов</h3>
+                        <br>
+                        <div class="list-group col-sm-12 col-sm-offset-3 text-left">
+                            {% for ans in lesson['answers'] %}
+                                <input type="checkbox" id="li-hd-{{ ans['student_id'] }}" class="hide"/>
+                                <label for="li-hd-{{ ans['student_id'] }}">{{ ans['student_surname'] }} {{ ans['student_name'] }} {{ ans['student_midname'] }}</label>
+                                <div>
+                                    <form method="post" role="form" class="form-horizontal">
+                                        <input name="lesson_id" value="{{ lesson['id'] }}" class="hidden">
+                                        <input name="student_id" value="{{ ans['student_id'] }}" class="hidden">
+                                        <div class="answer row form-group">{{ ans['answer'] }}</div>
+                                        <div class="form-group">
+                                            <label for="mark" class="col-sm-3 control-label">Оценка:</label>
+                                            <div class="col-sm-2">
+                                                <select id="mark" name="mark" class="form-control">
+                                                    <option value="5" {% if ans['mark'] == 5 %} selected="selected" {% endif %}>5</option>
+                                                    <option value="4" {% if ans['mark'] == 4 %} selected="selected" {% endif %}>4</option>
+                                                    <option value="3" {% if ans['mark'] == 3 %} selected="selected" {% endif %}>3</option>
+                                                    <option value="2" {% if ans['mark'] == 2 %} selected="selected" {% endif %}>2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6 text-left">
+                                                <button name="mark_answer" type="submit" class="btn btn-primary">Поставить</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-sm-6">
+                    {% if task is not none %}
+                        <div class="row text-center">
+                            <h3 class="title">Ваше решение</h3>
+                        </div>
+                        <form method="post" role="form" class="form-horizontal">
+                            <input name="lesson_id" value="{{ lesson['id'] }}" class="hidden">
+                            <div class="row form-group">
+                                <textarea class="form-control" rows="10" name="answer">{% if answer is not none %}{{ answer['answer'] }}{% endif %}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                {% if answer is not none %}
+                                    {% if answer['mark'] is not none %}
+                                        <div class="text-left mark">
+                                            Ваша оценка: {{ answer['mark'] }}
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+                                <div class="col-sm-8 text-right">
+                                    <button name="update_answer" type="submit" class="btn btn-primary btn-orange">Изменить решение</button>
+                                </div>
+                            </div>
+                        </form>
+                    {% else %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="container top-container">
+                <div class="row text-center">
+                    <h1 class="title">Урок не найден</h1>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock  %}
