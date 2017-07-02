@@ -1,7 +1,7 @@
 from datetime import timedelta
 import os
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 PORT = 5000
 SESSION_EXPIRES_AFTER = timedelta(hours=1)
 
